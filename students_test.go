@@ -32,7 +32,31 @@ func TestLen(t *testing.T){
 	}
 }
 
-func TestLess(t *testing.T){
+func TestLessBirthDay(t *testing.T){
+	var people = People{
+		Person{firstName:"Petro",lastName:"Bullet",birthDay: time.Now() },
+		Person{firstName:"Petro",lastName:"Bullet",birthDay: time.Now().AddDate(1,1,1)},
+	}
+	result :=people.Less(0,1)
+	expected := false
+	if result!=expected{
+		t.Errorf("Expected %t , got %t",expected,result)
+	}
+}
+
+func TestLessLastName(t *testing.T){
+	var people = People{
+		Person{firstName:"Petro",lastName:"Bullet",birthDay: time.Now() },
+		Person{firstName:"Petro",lastName:"Sirko",birthDay: time.Now()},
+	}
+	result :=people.Less(0,1)
+	expected := true
+	if result!=expected{
+		t.Errorf("Expected %t , got %t",expected,result)
+	}
+}
+
+func TestLessFirstName(t *testing.T){
 	var people = People{
 		Person{firstName:"Petro",lastName:"Bullet",birthDay: time.Now() },
 		Person{firstName:"Ivan",lastName:"Bullet",birthDay: time.Now()},
@@ -69,6 +93,26 @@ func TestNew(t *testing.T) {
 
 	if !reflect.DeepEqual(expected,*matrix){
 		t.Error("Matrix not equals ")
+	}
+
+}
+
+func TestNew2(t *testing.T) {
+
+	_,err := New("x\n2\n3\n4\n5\n6")
+
+	if err==nil{
+		t.Error("Must be an Error in New procedure ")
+	}
+
+}
+
+func TestNew3(t *testing.T) {
+
+	_,err := New("1 2\n3 4\n5")
+
+	if err==nil{
+		t.Error("Must be an Error in New procedure ")
 	}
 
 }
